@@ -1,0 +1,164 @@
+This is my individual work.
+
+# Understanding Customer Behaviour and Revenue Drivers in Electronic Sales
+
+1. Project Overview
+
+This project analyses a one-year electronic goods retail dataset (19,999 transactions, September 2023 – September 2024) to answer three research questions about customer purchasing behaviour:
+
+- RQ1 — Do gender and age group differences exist in loyalty conversion, order cancellation, payment method, and shipping preferences?
+- RQ2 — Do gender or age group predict price tier preferences within the same product category?
+- RQ3 — What factors drive total spending, and does product model price level influence add-on purchasing behaviour?
+
+Core finding:Neither gender nor age is a meaningful segmentation variable. Demographic differences are statistically negligible across all tested indicators. Revenue is driven instead by product type, purchase quantity, and a tiered add-on pricing structure linked to main product price level.
+
+
+2. Dataset
+
+| Field | Description |
+|---|---|
+| `Customer ID` | Unique customer identifier |
+| `Age` | Customer age (18–80) |
+| `Gender` | Male / Female |
+| `Loyalty Member` | Yes / No (changes over time) |
+| `Product Type` | Smartphone, Laptop, Tablet, Smartwatch, Headphones |
+| `SKU` | Product model code (10 distinct SKUs) |
+| `Rating` | Product rating 1–5 (no nulls) |
+| `Order Status` | Completed / Cancelled |
+| `Payment Method` | Credit Card, PayPal, Debit Card, Bank Transfer, Cash |
+| `Total Price` | Unit Price × Quantity |
+| `Unit Price` | Price per unit (fixed per SKU) |
+| `Quantity` | Units purchased (1–10) |
+| `Purchase Date` | YYYY-MM-DD |
+| `Shipping Type` | Standard, Express, Overnight, Same Day, Expedited |
+| `Add-ons Purchased` | Extended Warranty / Accessory / Impulse Item |
+| `Add-on Total` | Total add-on spend (billed separately from Total Price) |
+
+Data cleaning notes:
+- `Payment Method` had two spellings for PayPal ("PayPal" and "Paypal") — standardised to "PayPal"
+- 1 row with missing `Gender` removed → 19,999 rows retained
+- 4 single-order anomaly SKUs excluded from RQ2 tier analysis → 19,995 rows
+
+
+3. File Structure
+
+
+outputs/
+│
+├── Assignment_with_age.docx          ← Final complete report (recommended)
+│                                       Includes gender + age analysis for RQ1 & RQ2
+│
+├── Assignment_final_corrected.docx   ← Previous version with corrections highlighted
+│                                       (gender analysis only, no age)
+│
+├── RQ2_analysis.docx                 ← Standalone RQ2 deep-dive document
+│                                       Explains qcut failure + corrected SKU-tier method
+│
+├── age_analysis.ipynb                ← Colab notebook: age group analysis (RQ1 & RQ2)
+│
+├── RQ2_corrected_analysis.ipynb      ← Colab notebook: full corrected RQ2 analysis
+│
+├── final_analysis.ipynb              ← Colab notebook: complete analysis (all 3 RQs)
+│
+├── analysis_v2.py                    ← Python script version (run locally)
+│
+└── [figures]                         ← PNG charts exported from analysis
+    ├── rq1_gender_behaviour.png
+    ├── rq1_loyalty_conversion.png
+    ├── rq2_price_tier.png
+    ├── rq3_revenue_drivers.png
+    └── ...
+
+
+4. How to Run the Code
+
+### Option A — Google Colab (recommended)
+
+   1. Open `age_analysis.ipynb` or `final_analysis.ipynb` in Google Colab
+   2. Upload the dataset when prompted:
+   ```python
+   from google.colab import files
+   files.upload()
+   ```
+   3. Run all cells in order
+
+### Option B — Local Python
+
+```bash
+pip install pandas numpy matplotlib scipy openpyxl pillow
+
+# Place the dataset in the same directory, then:
+python analysis_v2.py
+```
+
+Required libraries: `pandas`, `numpy`, `matplotlib`, `scipy`, `openpyxl`
+
+
+
+5. Key Methodological Notes
+
+### RQ2 — Why `pd.qcut` Failed and the Corrected Approach
+
+The initial tier assignment used `pd.qcut(x, q=3)` to divide Unit Price into Low / Mid / High thirds. This failed because:
+
+- Unit Price is **discrete**, not continuous — each product has only 2–4 fixed SKU prices
+- One SKU typically holds ~50% of orders, so the 33rd and 67th percentile cut points land on the **same value**
+- This creates duplicate bin edges → `ValueError` → fallback assigns **all rows to "Mid"** → p-values of 1.000
+
+Corrected method: SKU prices are ranked within each product category and assigned tiers directly:
+
+| Product | Low | Mid | High |
+|---|---|---|---|
+| Smartphone | $20.75 | $791.19 | $1,139.68 |
+| Laptop | $463.96 | — | $674.32 |
+| Smartwatch | $459.50 | — | $844.83 |
+| Tablet | $247.03 | — | $786.41 |
+| Headphones | $361.18 | — | — |
+
+Four single-order anomaly SKUs are excluded from analysis.
+
+### Age Group Boundaries
+
+| Group | Age Range | n |
+|---|---|---|
+| 18–30 | Young adults | 4,068 |
+| 31–45 | Early mid-life | 4,872 |
+| 46–60 | Mid-life | 4,726 |
+| 61–80 | Older adults | 6,333 |
+
+Boundaries are informed by the dataset's quartile structure (Q1 = 33, Q3 = 65).
+
+
+
+6. Summary of Statistical Results
+
+ RQ1 — Behavioural Indicators
+
+| Indicator | Gender p | Age p | Significant? |
+|---|---|---|---|
+| Loyalty Conversion | 0.654 | 0.219 | No |
+| Order Cancellation | 0.171 | 0.428 | No |
+| Credit Card Usage | 0.658 | 0.726 | No |
+| Shipping Type | 0.503 | 0.847 | No |
+
+ RQ2 — Price Tier Preference
+
+| Product | Gender p (χ²) | Age p (χ²) | Age p (ANOVA) |
+|---|---|---|---|
+| Smartphone | 0.537 | 0.761 | 0.366 |
+| Laptop | 0.212 | 0.490 | 0.539 |
+| Smartwatch | 0.512 | 0.338 | 0.339 |
+| Tablet | 0.599 | 0.385 | 0.385 |
+
+All Cohen's w and η² effect sizes < 0.03 (negligible).
+
+ RQ3 — Revenue Drivers
+
+| Driver | Pearson r with Total Price |
+|---|---|
+| Unit Price | 0.674 |
+| Quantity | 0.654 |
+| Add-on Total | ~0.12 (2% of revenue) |
+
+Add-on finding: Attach rate is uniform across price levels (~75%), but customers buying premium SKUs spend ~2× more on add-ons ($83 vs $41). This is statistically significant for Smartphone and Laptop (both p < 0.001).
+
