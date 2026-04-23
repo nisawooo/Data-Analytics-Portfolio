@@ -1,0 +1,67 @@
+Instagram Beauty Influencer Engagement Analysis
+
+1. My Contribution
+   Designed and implemented caption feature engineering pipeline from raw text data
+   
+   Performed multimodal regression analysis (text + image features)
+   
+   Conducted data visualization and exploratory analysis
+   
+   Built presentation slides and contributed to final group presentation
+   
+   Translated statistical results into business-oriented insights for non-technical stakeholders
+
+2. Tools & Methods
+Python | R | Excel | VADER Sentiment Analysis | OLS Regression | Data Visualization | Feature Engineering
+
+3. Overview
+This project analyses 9,737 Instagram beauty influencer posts using a multimodal dataset combining caption text and image features. The objective is to understand how different content characteristics influence post-level engagement (likes + comments/followers).
+
+The study applies multiple OLS regression models to compare explanatory power across text, image, and combined feature sets, as well as across influencer tiers (micro, mid, macro).
+
+4. Research Objective
+To examine how caption and image features jointly explain variations in engagement rate across different influencer tiers in Instagram beauty content.
+
+5. Dataset
+   9,737 Instagram beauty influencer posts
+   Source: Kim et al. (WSDM 2021)
+   Variables include caption text, image attributes, and engagement metrics
+   Influencers grouped into micro, mid, and macro tiers
+
+6. Feature Engineering
+Caption Features (Text Analysis)
+Extracted from raw Instagram captions:
+   Sentiment score (VADER)
+   Caption length (character count)
+   Hashtag count
+   Emoji count
+   Call-to-action (CTA) indicator
+Output dataset: beauty_posts_caption.csv
+
+7. Image Features (Visual Analysis)
+   Brightness
+   Colorfulness
+   Face presence
+   Edge density
+
+8. Methodology
+   Regression Models (OLS)
+   Caption-only model
+   Image-only model
+   Combined multimodal model
+Tier-stratified models (micro/mid/macro influencers)
+OLS regression was selected for the interpretability of feature effects across different content modalities.
+
+9. Key Findings
+   Content features explain a limited proportion of engagement variance (R² ≈ 0.02–0.03)
+   Image and caption features contribute differently depending on influencer tier
+   Face presence and sentiment show weak but consistent associations with engagement
+   Macro influencer models exhibit lower stability due to smaller sample size
+
+10. Limitations
+   Cross-sectional dataset (no time-series dynamics)
+   Platform-specific bias (Instagram only)
+   Low explanatory power, indicating strong influence of external factors (e.g. algorithm, timing)
+   Correlation does not imply causation
+
+
