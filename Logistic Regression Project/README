@@ -1,0 +1,60 @@
+Contributions/ What I did：
+
+  - Collaborated with team members to evaluate and select appropriate models for the project
+
+  - Executed and debugged code pipelines to ensure smooth experimentation and reproducibility
+
+  - Analyzed model outputs and interpreted results to derive actionable insights
+
+  - Designed and provided presentation slide templates to improve clarity and structure
+
+  - Led the technical presentation, focusing on code implementation and methodology
+
+
+
+
+https://github.com/nisawooo/student-success-analytics
+
+1. Model Description
+
+Two supervised learning models were used to classify students into good performance and poor performance categories:
+    Logistic Regression – a probabilistic, interpretable classification model
+
+    Decision Tree – a rule-based, interpretable model
+
+Target variable: Result (good performance vs poor performance)
+Key predictors: Attendance, Hours_Studied, Previous_Scores, Tutoring_Sessions
+
+
+
+2. Intended Use
+
+The model is intended for academic performance risk prediction, to help identify students who may require additional support, such as tutoring or attendance intervention.
+
+Not intended for high-stakes decision-making.
+
+
+
+
+3. Fairness Considerations
+
+Gender Bias: No strong evidence of gender-based prediction bias. Model coefficients showed minimal gender effect.
+Socioeconomic or parental involvement bias: Some influence exists (Parental_Involvement), but the impact is relatively small compared to Attendance and Hours Studied.
+
+Attendance and study hours dominate predictions: These are behavioural rather than demographic factors, reducing fairness concerns.
+
+Class imbalance handled: Accuracy interpreted alongside sensitivity and specificity to avoid misleading conclusions.
+
+
+
+4. Limitations
+
+Does not establish causal relationships.
+
+Decision Tree may be unstable and sensitive to sampling.
+
+Performance relies heavily on attendance distribution in the dataset.
+
+The model may not generalise to significantly different student populations.
+
+
