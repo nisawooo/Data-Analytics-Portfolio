@@ -1,0 +1,86 @@
+# From Minutes to Megabytes: Ireland's Telecom Transformation
+
+It is group work.
+
+
+1. ## My Contributions/ What I did
+
+- ### Literature Review & Research Foundation
+
+Authored the complete literature review, identifying and synthesising relevant academic papers, industry reports, and regulatory publications to ground the project's methodology and findings in established evidence. Ensured all analytical claims and conclusions were supported by credible external sources, maintaining academic rigour throughout.
+
+
+- ### Entity-Relationship Diagram (ERD) Design
+
+Designed the ERD that maps the relational structure of Ireland's telecom dataset, defining entities (Operator, Subscription, Revenue, Traffic Usage, Service Type, Time Period, Investment, Coverage) and their relationships. This model provided the conceptual foundation for the logical data model and subsequent Tableau integration.
+
+
+- ### Data Interpretation & Analytical Insight
+
+Led the interpretation of all charts and data outputs across three Tableau dashboards — translating quantitative trends (e.g., the 23.21% decline in fixed-voice subscribers, ARPU compression despite stable mobile revenue, DSL-to-FTTP technology migration) into coherent narratives about Ireland's digital transition.
+
+
+
+- ### Tableau Dashboard Support
+
+Contributed to iterative revisions of the Tableau dashboards, refining visualisations to better align with the analytical narrative and ensuring accuracy of data representation.
+
+
+
+- ### Presentation Content (Data & Charts)
+
+Produced all data-driven content and charts used in the project presentation slides, translating complex multi-dimensional datasets into clear, audience-ready visuals.
+
+
+
+---
+
+
+
+
+2. ## Project Overview
+
+This project explores the evolving dynamics of Ireland's telecommunications industry between 2015 and 2024. The central question is why rapid subscriber growth has not translated proportionally into revenue growth — a tension examined through three analytical lenses: technological evolution, consumer behaviour shifts, and competitive market dynamics.
+
+**Data source:** Irish Commission for Communications Regulation (ComReg) — quarterly datasets covering telecom revenues, infrastructure coverage, and subscriber counts across Fixed Voice, Mobile, and Broadband service categories.
+
+**Tools used:** Microsoft Excel (data cleaning and transformation), Tableau (visualisation), Draw.io / Lucidchart (data modelling)
+
+---
+
+
+
+3. ## Key Findings
+
+- **Fixed voice is in structural decline** — subscriber counts fell 23.21% over the decade, reflecting a permanent shift away from traditional telephony.
+- **Mobile subscribers grew 2.8%** while Average Revenue Per User (ARPU) fell steadily, meaning total mobile revenue remained stable only because subscriber volume offset per-user spend compression.
+- **Broadband data consumption outpaced subscriber growth significantly** — indicating rising per-user intensity rather than purely new adoption.
+- **Technology migration is well underway** — DSL connections declined sharply while FTTP (fibre-to-the-premises) adoption accelerated, supported by government digital infrastructure investment.
+- **By 2024, broadband revenue surpassed mobile revenue**, marking a structural milestone in the Irish telecom market.
+- **Market concentration is increasing in broadband** — Eir, Virgin Media, and Vodafone now dominate, while the mobile segment remains relatively stable with Vodafone leading marginally ahead of Three and Eir.
+
+---
+
+
+
+
+
+4. ## Dashboard Summary
+
+The Tableau dashboards are published publicly:  
+[View on Tableau Public](https://public.tableau.com/app/profile/ahmad.kamran1294/viz/Group6_DVM_17610684133390/MarketDynamics)
+
+| Dashboard | Focus |
+|---|---|
+| Irish Telecom Overview (2015–2024) | KPI summary, ARPU trends, broadband usage vs subscribers, technology breakdown |
+| Technology Shifts: Mobile–Broadband Transition | 2G/3G decline, 4G/5G adoption, landline revenue erosion, broadband revenue overtaking mobile |
+| Market Dynamics | Operator market shares (mobile & broadband), fixed vs mobile infrastructure investment |
+
+---
+
+
+
+5. ## Data Pipeline
+
+Raw data (ComReg Excel workbook, 2005–2025) → scoped to 2015–2024 for completeness → segregated by metric type (Subscription, Revenue, Traffic, Investment) → pivoted to columnar format → standardised naming conventions → missing value treatment (mean imputation for minor gaps; 5G data excluded pre-Q2 2020) → Time_ID foreign key applied across all tables → imported into Tableau for visualisation.
+
