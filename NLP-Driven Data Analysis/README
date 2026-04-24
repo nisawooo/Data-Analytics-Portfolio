@@ -1,3 +1,29 @@
 It is an individual work.
 I also created a webpage for this work
 https://nisawooo.github.io/Big-data-individual-assignment/ 
+
+
+1. What This Project Is
+
+An end-to-end AI project plan proposing a clinical NLP proof-of-concept for Tempus AI, a US precision medicine company with 40 million patient records-78% of which remain locked in unstructured free text. The PoC designs a pipeline to automatically extract and structure Type 2 Diabetes Mellitus data from GP free-text notes, grounded in the Irish healthcare context and GDPR constraints.
+
+
+
+2. What I Built
+
+Business case rooted in real Irish healthcare data (€601M annual diabetes inpatient cost, HSE eHealth maturity at 25% vs EU average 83%)
+China–Ireland comparative analysis using peer-reviewed literature on Ningbo's regional health platform (Li et al., 2020) as a proof of feasibility before arguing why the approach requires re-engineering for GDPR
+Three everyday analogies (parcel sorting → NER, currency exchange → OMOP CDM, airport security → confidence scoring) to make NLP architecture accessible without sacrificing technical precision
+7-stage pipeline: Kafka ingestion → Presidio PHI de-identification → ClinicalBERT NER → confidence routing → OMOP CDM v5.4 harmonisation → Gold serving → MLflow audit logging
+Model selection rationale: ClinicalBERT over GPT-4, with honest critique of domain mismatch risk on GP text vs hospital discharge notes
+Financial model: 5-year cashflow with explicit costs, Insights licensing revenue projections, break-even at ~12 months, ROI ~19.5× — all figures annotated as illustrative, not audited
+ESG analysis across E, S, G dimensions with a section explicitly acknowledging the commercial maximisation vs GDPR minimisation tension rather than glossing over it
+
+
+
+3. What I Learned
+
+How to design a clinical AI project plan that satisfies commercial, regulatory, and clinical stakeholder requirements simultaneously — not just the technical architecture
+The practical difference between HIPAA and GDPR in AI deployment: right to erasure, data minimisation, and lawful basis for processing are not HIPAA concepts and require different pipeline design decisions
+Why confidence thresholds, human-in-the-loop queues, and active learning are governance mechanisms as much as performance mechanisms
+How to use a comparative international case (China) honestly, as a proof of feasibility rather than a direct template, and argue what needs to change before the approach transfers
