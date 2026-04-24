@@ -1,0 +1,81 @@
+Data-Driven Marketing Decisions | Term Deposit Campaign Analysis
+
+## Project Overview
+
+End-to-end data analytics project examining how sociodemographic factors and campaign execution variables jointly determine term deposit subscription outcomes and financial returns for a retail bank. The study integrates segmentation, predictive modelling, and a financial decision framework to produce actionable marketing recommendations.
+
+---
+
+ ## My Contributions
+
+1.### Literature Review
+
+Synthesised academic and industry evidence across three core themes to motivate the analytical framework:
+
+   - Life-cycle wealth theory (Olivera & De Mulder, 2025): Established the rationale for age-band segmentation, showing that wealth accumulation patterns across adulthood explain older customers' stronger preference for secure savings products such as term deposits.
+
+   - Behavioural segmentation (Alves Gomes & Meisen, 2023): Argued that demographic variables alone are insufficient and must be combined with behavioural signals (contact history, prior outcomes) for effective targeting — directly motivating the combined modelling strategy in Phase 2.
+
+   - Seasonal financial behaviour (Level Agency, 2025; Moro et al., 2011): Provided evidence that customers are more receptive to financial decisions during specific periods, justifying the treatment of month-of-contact as a substantive predictor rather than a nuisance variable.
+
+   - EMV as a performance metric (EMV Guide, 2025; Olivera & De Mulder, 2025): Critiqued response-rate-only optimisation and established the theoretical basis for the Expected Monetary Value framework used in Phase 4.
+
+---
+
+2. ### Predictive Modelling (RQ2) ---I did
+
+Designed and executed a three-model logistic regression comparison to quantify the relative predictive power of demographic versus campaign execution variables.
+
+**Model Architecture:**
+
+| Model | Predictors | AUC |
+|---|---|---|
+| Model 1 — Demographics | Age band, job group, education, marital status | 0.642 |
+| Model 2 — Campaign Execution | Contact type, duration, frequency, prior contacts, historical outcome | 0.899 |
+| Model 3 — Combined | All predictors from Models 1 & 2 | 0.906 |
+
+**Key implementation details:**
+- Reference levels manually specified for all categorical variables to ensure interpretable coefficients (e.g., Age: 18–29; Job: White-Collar; Month: January; Prior Outcome: Failure)
+- Variance Inflation Factors (VIF) inspected across all models — no severe multicollinearity detected
+- Model discrimination evaluated via AUC using the `pROC` package with leave-one-out cross-validation
+- Odds ratios extracted via `broom::tidy(exponentiate = TRUE)` for coefficient interpretation
+
+**Key finding:** Campaign execution variables (Model 2, AUC = 0.899) far outperform demographics alone (Model 1, AUC = 0.642). Adding demographics to the full model (Model 3) yields only marginal gain (+0.007 AUC), confirming that *how* the bank contacts customers drives outcomes far more than *who* those customers are. The strongest individual predictors were month of contact (March OR = 15.60 vs January) and prior campaign success (OR = 10.82).
+
+**Relevant code (R):**
+```r
+mod_full <- glm(y_bin ~ ageband + jobgroup + education + marital +
+                contact + duration + campaign + previous + poutcome + month,
+                data = bank, family = binomial)
+
+get_auc <- function(model) {
+  prob <- predict(model, bank, type = "response")
+  roc_obj <- roc(bank$y_bin, prob, quiet = TRUE)
+  return(as.numeric(auc(roc_obj)))
+}
+```
+
+---
+
+3. ### Executive Summary & Conclusion
+
+Authored the framing and synthesis sections of the report:
+
+   - Executive Summary: Condensed the four-phase analytical framework into a decision-relevant narrative, highlighting the EMV finding that the Not-Labor-Force 60+ segment yields ~+$43 EMV per contact (ROI >100%) while several large white-collar cohorts are value-destroying under balance-adjusted assumptions.
+
+   - Conclusion: Integrated findings across all four research questions, connecting the life-cycle wealth literature to the modelling outcomes and the EMV rankings, and articulating the strategic implication that uniform contact strategies are inefficient and that segment-specific campaign design is commercially necessary.
+
+---
+
+## Full Project Methodology (Team)
+
+| Phase | Method | Owner |
+|---|---|---|
+| Phase 1 | Bivariate profiling — chi-square tests by age band and job group | Team |
+| Phase 2 | Logistic regression model comparison (AUC) | **Me** |
+| Phase 3 | Interaction effects — Duration × Age, Frequency × Job Group | Team |
+| Phase 4 | EMV decision matrix — standard and balance-adjusted | Team |
+
+---
+
+
